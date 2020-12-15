@@ -1,0 +1,25 @@
+﻿@model  AppUserRole
+
+@{
+    ViewBag.Title = "UpdateAppUserRole";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-header">
+            <h3>Rol Guncelle</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="form-group">
+                    <label>Rol Adı</label>
+                    @Html.TextBoxFor(x => x.Role, new {@placeholder= Model.Role,  @class = "form-control" })
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guncelle</button>
+            </form>
+        </div>
+    </div>
+</div>
+

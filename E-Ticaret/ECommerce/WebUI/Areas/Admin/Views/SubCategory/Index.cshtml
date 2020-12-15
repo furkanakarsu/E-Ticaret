@@ -1,0 +1,120 @@
+﻿@model List<SubCategory>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@if (TempData["Result"] != null)
+{
+    <div class="alert alert-success">
+        <span>@TempData["Result"]</span>
+    </div>
+}
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-heading">
+            <div class="row mt-2 ml-2 mr-2">
+                <div class="col-lg-6">
+                    <h3>Alt Kategori Listesi</h3>
+                </div>
+                <div class="col-lg-6 text-right">
+                    @Html.ActionLink("Kategori Ekle", "AddSubCategory", null, new { @class = "btn btn-success" })
+                </div>
+            </div>
+
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            Kategori Adı
+                        </th>
+                        
+                        <th>
+                            Açıklama
+                        </th>
+                        <th>
+                            Durum
+                        </th>
+                        <th>Ust Kategori Adi</th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Count > 0)
+                    {
+                        foreach (SubCategory subcategory in Model)
+                        {
+                    <tr>
+                        <td>@subcategory.SubCategoryName</td>
+                        <td>@subcategory.Description</td>
+                        @switch (subcategory.Status)
+                        {
+                            case CORE.CoreEntity.Enums.Status.None:
+                                <td>Belirtilmemiş</td>
+                                break;
+                            case CORE.CoreEntity.Enums.Status.Active:
+                                <td>Aktif</td>
+                                break;
+                            case CORE.CoreEntity.Enums.Status.Deleted:
+                                <td>Silinmiş</td>
+                                break;
+                            case CORE.CoreEntity.Enums.Status.Updated:
+                                <td>Güncellenmiş</td>
+                                break;
+
+                        }
+
+                        @foreach (var item in TempData["Kategori Listesi"] as IEnumerable<Category>)
+                        {
+                            if (item.Id == subcategory.CategoryId)
+                            {
+                                <td>
+                                    @item.CategoryName
+                                </td>
+                            }
+
+                        }
+                        @*Tempdata ile Categorileri listele ve subcategoru.categoryid ile eslenenin category adini yazdir.*@
+
+                        @if (subcategory.Status == CORE.CoreEntity.Enums.Status.Deleted)
+                        {
+                            <td>
+                                @Html.ActionLink("Düzenle", "UpdateSubCategory", new { id = subcategory.Id }, new { @class = "btn btn-xs btn-warning" })
+
+                            </td>
+
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.ActionLink("Düzenle", "UpdateSubCategory", new { id = subcategory.Id }, new { @class = "btn btn-xs btn-warning" })
+                                @Html.ActionLink("Sil", "DeleteSubCategory", new { id = subcategory.Id }, new { @class = "btn btn-xs btn-danger" })
+
+                            </td>
+
+                        }
+
+                    </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3">
+                                <div class="alert alert-warning text-center">
+                                    <span>Herhangi bir kategori mevcut değil.</span>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+

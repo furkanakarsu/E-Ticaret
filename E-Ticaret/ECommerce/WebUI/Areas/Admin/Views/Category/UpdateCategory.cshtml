@@ -1,0 +1,29 @@
+﻿@model Category
+
+@{
+    ViewBag.Title = "UpdateCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-header">
+            <h3>Kategoriyi Guncelle</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="form-group">
+                    <label>Kategori Adı</label>
+                    @Html.TextBoxFor(x => x.CategoryName, new { @class = "form-control", @placeholder = Model.CategoryName })
+                </div>
+                <div class="form-group">
+                    <label>Açıklama</label>
+                    @Html.TextBoxFor(x => x.Description, new { @class = "form-control", @placeholder = Model.Description })
+                </div>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
